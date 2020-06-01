@@ -4,55 +4,55 @@ namespace lab1GaussZeidel
 {
     class RandomMatrixGenerator
     {
-        private short size;             //размер матрицы
-        private double[,] matrix = new double[20,20];      //матрица
-        private double[] freeTerms = new double[20];     //столбец свободных членов
-        private bool strictFlag;        //строгость хотя бы одного неравенства
-        private double strictAdding;
-        private Random randomCoefficientGenerator = new Random();
-        private byte[] strictInequationCount;
+        private short Size;             //размер матрицы
+        private double[,] Matrix = new double[20,20];      //матрица
+        private double[] FreeTerms = new double[20];     //столбец свободных членов
+        private bool StrictFlag;        //строгость хотя бы одного неравенства
+        private double StrictAdding;
+        private Random RandomCoefficientGenerator = new Random();
+        private byte[] StrictInequationCount;
 
         public RandomMatrixGenerator(short outerSize) {
-            size = outerSize;
-            generateMatrix();
-            generateFreeTerms();
+            Size = outerSize;
+            GenerateMatrix();
+            GenerateFreeTerms();
         }
 
-        public void generateMatrix()
+        public void GenerateMatrix()
         {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                matrix[i,i] = 0;
-                for (int j = 0; j < size; j++) 
+                Matrix[i,i] = 0;
+                for (int j = 0; j < Size; j++) 
                 {
                     if(i != j)
                     {
-                        matrix[i,j] = 0;
-                        matrix[i,j] += randomCoefficientGenerator.Next(201) - 100;
-                        if (matrix[i, j] >= 0) matrix[i, j] += (double)randomCoefficientGenerator.Next(1000000000) / 1000000000;
-                        else matrix[i,j] -= (double)randomCoefficientGenerator.Next(1000000000) / 1000000000;
-                        matrix[i,i] += Math.Abs(matrix[i,j]);
+                        Matrix[i,j] = 0;
+                        Matrix[i,j] += RandomCoefficientGenerator.Next(201) - 100;
+                        if (Matrix[i, j] >= 0) Matrix[i, j] += (double)RandomCoefficientGenerator.Next(1000000000) / 1000000000;
+                        else Matrix[i,j] -= (double)RandomCoefficientGenerator.Next(1000000000) / 1000000000;
+                        Matrix[i,i] += Math.Abs(Matrix[i,j]);
                     }
                 }
-                if(randomCoefficientGenerator.Next(2) == 1) matrix[i,i] *= -1;
+                if(RandomCoefficientGenerator.Next(2) == 1) Matrix[i,i] *= -1;
             }
 
-            strictFlag = false;
-            strictInequationCount = new Byte[size];
-            while (!strictFlag) 
+            StrictFlag = false;
+            StrictInequationCount = new Byte[Size];
+            while (!StrictFlag) 
             {
-                randomCoefficientGenerator.NextBytes(strictInequationCount);
-                for (int i = 0; i < size; i++)
+                RandomCoefficientGenerator.NextBytes(StrictInequationCount);
+                for (int i = 0; i < Size; i++)
                 {
-                    if (strictInequationCount[i] % 2 == 0)
+                    if (StrictInequationCount[i] % 2 == 0)
                     {
-                        int randomExtent = (int)Math.Truncate(Math.Abs(matrix[i,i]));
-                        strictFlag = true;
-                        strictAdding = randomCoefficientGenerator.Next(randomExtent + 1) + randomExtent;
-                        strictAdding += (double)randomCoefficientGenerator.Next(1000000000) / 1000000000;
-                        if (matrix[i,i] > 0) matrix[i,i] += strictAdding;
-                        else if (matrix[i,i] < 0) matrix[i,i] -= strictAdding;
-                        else matrix[i,i] += 1;
+                        int randomExtent = (int)Math.Truncate(Math.Abs(Matrix[i,i]));
+                        StrictFlag = true;
+                        StrictAdding = RandomCoefficientGenerator.Next(randomExtent + 1) + randomExtent;
+                        StrictAdding += (double)RandomCoefficientGenerator.Next(1000000000) / 1000000000;
+                        if (Matrix[i,i] > 0) Matrix[i,i] += StrictAdding;
+                        else if (Matrix[i,i] < 0) Matrix[i,i] -= StrictAdding;
+                        else Matrix[i,i] += 1;
                     }
                 }
             }
@@ -61,23 +61,23 @@ namespace lab1GaussZeidel
 
         }
 
-        private void generateFreeTerms()
+        private void GenerateFreeTerms()
         {            
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                freeTerms[i] = randomCoefficientGenerator.Next(200 * size + 1) - 100 * size;
-                if (freeTerms[i] >= 0) freeTerms[i] += (double)randomCoefficientGenerator.Next(1000000000) / 1000000000;
-                else freeTerms[i] -= (double)randomCoefficientGenerator.Next(1000000000) / 1000000000;
+                FreeTerms[i] = RandomCoefficientGenerator.Next(200 * Size + 1) - 100 * Size;
+                if (FreeTerms[i] >= 0) FreeTerms[i] += (double)RandomCoefficientGenerator.Next(1000000000) / 1000000000;
+                else FreeTerms[i] -= (double)RandomCoefficientGenerator.Next(1000000000) / 1000000000;
             }
         }
 
-        public double[,] getMatrix() {
-            return matrix;
+        public double[,] GetMatrix() {
+            return Matrix;
         }
 
-        public double[] getFreeTerms()
+        public double[] GetFreeTerms()
         {
-            return freeTerms;
+            return FreeTerms;
         }
     }
 }

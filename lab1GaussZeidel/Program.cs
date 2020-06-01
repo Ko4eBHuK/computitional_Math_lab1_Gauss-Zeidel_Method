@@ -4,21 +4,19 @@ namespace lab1GaussZeidel
 {
     class Program
     {
-        
-
         static void Main(string[] args)
         {
-            ConsoleKey key;
+            ConsoleKey pressedKey;
 
             do
             {
                 Console.Clear();
                 Console.WriteLine("Выберите формат ввода данных: \nm - ручной ввод | f - прочитать из файла");
-                key = Console.ReadKey().Key;
+                pressedKey = Console.ReadKey().Key;
                 MatrixManager matrixInput = new MatrixManager();
                 Console.WriteLine();
 
-                switch (key)
+                switch (pressedKey)
                 {
                     case ConsoleKey.M:
                         matrixInput.ManualInputAndSolution();
@@ -31,9 +29,9 @@ namespace lab1GaussZeidel
                         break;
                 }
 
-                Console.WriteLine("Повторить работу программы?\nЛюбая клавиша, кроме Esc - да | Esc - нет");
-                key = Console.ReadKey().Key;
-            } while (key != ConsoleKey.Escape);
+                Console.WriteLine("\nПовторить работу программы?\nЛюбая клавиша, кроме Esc - да | Esc - нет");
+                pressedKey = Console.ReadKey().Key;
+            } while (pressedKey != ConsoleKey.Escape);
 
         }
     }
